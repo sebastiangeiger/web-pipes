@@ -1,0 +1,18 @@
+GEM
+  remote: https://rubygems.org/
+  specs:
+    faraday (0.9.0)
+      multipart-post (>= 1.2, < 3)
+    libv8 (3.16.14.7)
+    multipart-post (2.0.0)
+    ref (1.0.5)
+    therubyracer (0.12.1)
+      libv8 (~> 3.16.14.0)
+      ref
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  faraday
+  therubyracer
