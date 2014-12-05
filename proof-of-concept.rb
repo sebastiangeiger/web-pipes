@@ -17,7 +17,26 @@ class PivotalTracker
     JSON.parse(response.body)
   end
 
+  def update_project_story(project_id, story_id, attributes = {})
+    response = connection.put do |req|
+      req.url "/services/v5/projects/#{project_id}/stories/#{story_id}"
+      req.headers['Content-Type'] = 'application/json'
+      req.body = JSON.dump(to_hash(attributes))
+    end
+  end
+
   private
+
+  def to_hash(object)
+    if object.is_a? Hash
+      object
+    else
+      object.reduce({}) do |hash, attribute|
+        key, value = attribute
+        hash.merge(key => value)
+      end
+    end
+  end
 
   def connection
     @connection ||= Faraday.new(:url => 'https://www.pivotaltracker.com') do |faraday|
@@ -32,10 +51,14 @@ script = <<EOF
     return project.name === "ClariStream Management System";
   })[0];
   var stories = pivotal.stories_for_project(project.id);
-  stories.filter(function(story){
+  var offenders = stories.filter(function(story){
     var beginsWithId = new RegExp("^"+story.id+"\s+-");
     return (story.name.match(beginsWithId) === null);
-  }).map(function(story) { return story.name });
+  });
+  offenders.forEach(function(offender){
+    var newName = offender.id + " - " + offender.name;
+    pivotal.update_project_story(project.id, offender.id, {name: newName});
+  });
 EOF
 
 cxt = V8::Context.new
@@ -44,4 +67,4 @@ cxt['console'] = STDOUT
 def STDOUT.log(*a)
   puts sprintf(*a.map(&:to_s))
 end
-p cxt.eval(script).to_a
+cxt.eval(script)
