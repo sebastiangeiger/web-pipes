@@ -2,7 +2,7 @@ require 'rspec'
 require_relative '../../lib/web-pipes'
 
 describe 'Executing Javascript' do
-  subject(:protocol) { JavascriptExecutor.new.execute(script) }
+  subject(:protocol) { WebPipes::JavascriptExecutor.new.execute(script) }
   let(:result) { protocol.result }
   let(:errors) { protocol.errors }
   let(:error) { protocol.errors.first }

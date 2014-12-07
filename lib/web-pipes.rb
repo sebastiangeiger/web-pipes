@@ -1,6 +1,7 @@
 require 'therubyracer'
 require 'faraday'
 require 'json'
+require_relative 'web-pipes/javascript_executor'
 
 raise "Please set your PIVOTAL_TOKEN" unless ENV["PIVOTAL_TOKEN"]
 class PivotalTracker
@@ -65,43 +66,3 @@ def STDOUT.log(*a)
   puts sprintf(*a.map(&:to_s))
 end
 
-class Protocol
-  attr_accessor :result, :errors
-
-  def initialize
-    @errors = []
-    @executed = false
-  end
-
-  def protocol(&block)
-    begin
-      @result = block.call
-    rescue V8::Error => e
-      @errors << e
-    end
-    @executed = true
-    self
-  end
-
-  def executed?
-    !!@executed
-  end
-
-  def successful?
-    executed? and @errors.empty?
-  end
-end
-
-class JavascriptExecutor
-  def initialize
-    @context = V8::Context.new
-    @context['pivotal'] = PivotalTracker.new
-    @context['console'] = STDOUT
-  end
-
-  def execute(script)
-    Protocol.new.protocol do
-      @context.eval(script)
-    end
-  end
-end
