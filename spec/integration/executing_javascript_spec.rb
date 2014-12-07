@@ -1,5 +1,6 @@
 require 'rspec'
 require 'webmock/rspec'
+require 'pry'
 require_relative '../../lib/web-pipes'
 
 describe 'Executing Javascript' do
