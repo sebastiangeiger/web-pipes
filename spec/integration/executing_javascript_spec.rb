@@ -1,5 +1,5 @@
 require 'rspec'
-require_relative '../../proof-of-concept'
+require_relative '../../lib/web-pipes'
 
 describe 'Executing Javascript' do
   subject(:protocol) { JavascriptExecutor.new.execute(script) }
