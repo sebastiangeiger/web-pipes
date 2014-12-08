@@ -34,9 +34,9 @@ describe 'Executing Javascript' do
   end
 
   context 'when using an external API' do
-    class ExternalApi
-      def getItems
-        JSON.parse(Faraday.new(:url => 'http://www.external-api.com').get('/items').body)
+    class ExternalApi < SimpleApi
+      request :get_items do
+        Faraday.new(:url => 'http://www.external-api.com').get('/items')
       end
     end
 
@@ -55,6 +55,15 @@ describe 'Executing Javascript' do
 
       it { is_expected.to be_successful }
       it { expect(result).to eql ["Hello", " ", "World"] }
+    end
+
+    context 'and the request fails' do
+      let(:status_code) { 404 }
+      let(:response_body) { "" }
+
+      it { is_expected.to_not be_successful }
+      it { expect(errors.size).to eql 1 }
+      it { expect(error.message).to eql "getItems returned a 404 status" }
     end
   end
 

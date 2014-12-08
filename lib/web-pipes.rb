@@ -2,6 +2,7 @@ require 'therubyracer'
 require 'faraday'
 require 'json'
 require_relative 'web-pipes/javascript_executor'
+require_relative 'web-pipes/simple_api'
 
 raise "Please set your PIVOTAL_TOKEN" unless ENV["PIVOTAL_TOKEN"]
 class PivotalTracker
