@@ -100,6 +100,7 @@ describe 'Executing Javascript' do
       it { is_expected.to_not be_successful }
       it { expect(errors.size).to eql 1 }
       it { expect(error.message).to eql "getItems returned a 404 status" }
+      it { expect(error.cause).to be_a RequestFailedError}
     end
   end
 
