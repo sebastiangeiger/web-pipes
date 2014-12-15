@@ -39,10 +39,11 @@ describe 'Executing Javascript' do
       %Q{var a = 1;\n} +
       %Q{var b = a+1;\n} +
       %Q{var c = b+1;\n} +
-      %Q{throw "Something went wrong";}
+      %Q{c = c+1; throw "Something went wrong";}
     end
     it { expect(error.message).to eql "Something went wrong" }
     it { expect(error.location.line).to eql 4 }
+    it { expect(error.location.column).to eql 10 }
   end
 
   context 'when a ruby object inside a scpript throws' do

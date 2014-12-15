@@ -39,13 +39,27 @@ module WebPipes
         end
 
         def line
+          eval_error do |match|
+            Integer(match[1])
+          end
+        end
+
+        def column
+          eval_error do |match|
+            Integer(match[2])
+          end
+        end
+
+        private
+        def eval_error(&block)
           eval_error = @error.backtrace.first
           if eval_error =~ EVAL_ERROR_REGEX
-            Integer(eval_error.match(EVAL_ERROR_REGEX)[1])
+            block.call(eval_error.match(EVAL_ERROR_REGEX))
           else
             nil
           end
         end
+
       end
     end
 
