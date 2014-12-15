@@ -14,6 +14,41 @@ module WebPipes
       @context[context_name.to_s] = instance
     end
 
+    class Error < StandardError
+      extend Forwardable
+
+      def_delegators :@original_error, :backtrace, :message
+
+      def self.from(error)
+        new(error)
+      end
+
+      def initialize(original_error)
+        @original_error = original_error
+      end
+
+      def location
+        Location.new(self)
+      end
+
+      class Location
+        EVAL_ERROR_REGEX = /at \<eval\>:(\d+):(\d+)/
+
+        def initialize(error)
+          @error = error
+        end
+
+        def line
+          eval_error = @error.backtrace.first
+          if eval_error =~ EVAL_ERROR_REGEX
+            Integer(eval_error.match(EVAL_ERROR_REGEX)[1])
+          else
+            nil
+          end
+        end
+      end
+    end
+
     class Protocol
       attr_accessor :result, :errors
 
@@ -25,8 +60,8 @@ module WebPipes
       def protocol(&block)
         begin
           @result = convert(block.call)
-        rescue V8::Error => e
-          @errors << e
+        rescue V8::Error => error
+          @errors << JavascriptExecutor::Error.from(error)
         end
         @executed = true
         self

@@ -29,8 +29,20 @@ describe 'Executing Javascript' do
     let(:script) { 'throw "Something went wrong"' }
     it { is_expected.to_not be_successful }
     it { expect(errors.size).to eql 1 }
+    it { expect(error).to be_a WebPipes::JavascriptExecutor::Error }
     it { expect(error.message).to eql "Something went wrong" }
     it { expect(result).to be_nil }
+  end
+
+  context 'when a longer script throws' do
+    let(:script) do
+      %Q{var a = 1;\n} +
+      %Q{var b = a+1;\n} +
+      %Q{var c = b+1;\n} +
+      %Q{throw "Something went wrong";}
+    end
+    it { expect(error.message).to eql "Something went wrong" }
+    it { expect(error.location.line).to eql 4 }
   end
 
   context 'when using an external API' do
