@@ -17,7 +17,7 @@ module WebPipes
     class Error < StandardError
       extend Forwardable
 
-      def_delegators :@original_error, :backtrace, :message
+      def_delegators :@original_error, :backtrace, :message, :cause
 
       def self.from(error)
         new(error)

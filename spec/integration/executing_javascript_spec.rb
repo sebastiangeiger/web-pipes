@@ -45,6 +45,30 @@ describe 'Executing Javascript' do
     it { expect(error.location.line).to eql 4 }
   end
 
+  context 'when a ruby object inside a scpript throws' do
+
+    CustomError = Class.new(StandardError)
+
+    class RubyKlazz
+      def this_fails
+        raise CustomError.new("Ruby error")
+      end
+    end
+
+    before { executor.register(:ruby_object, RubyKlazz.new) }
+
+    let(:script) do
+      %Q{var a = 1;\n} +
+      %Q{var b = a+1;\n} +
+      %Q{ruby_object.this_fails;\n} +
+      %Q{var c = b+1;\n}
+    end
+
+    it { expect(error.message).to eql "Ruby error" }
+    it { expect(error).to be_a WebPipes::JavascriptExecutor::Error }
+    it { expect(error.cause).to be_a CustomError }
+  end
+
   context 'when using an external API' do
     class ExternalApi < SimpleApi
       request :get_items do
