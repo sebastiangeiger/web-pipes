@@ -52,8 +52,8 @@ module WebPipes
 
         private
         def eval_error(&block)
-          eval_error = @error.backtrace.first
-          if eval_error =~ EVAL_ERROR_REGEX
+          eval_error = @error.backtrace.detect {|backtrace| backtrace =~ EVAL_ERROR_REGEX }
+          if eval_error
             block.call(eval_error.match(EVAL_ERROR_REGEX))
           else
             nil
