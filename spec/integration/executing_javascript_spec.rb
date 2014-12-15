@@ -67,6 +67,8 @@ describe 'Executing Javascript' do
 
     it { expect(error.message).to eql "Ruby error" }
     it { expect(error).to be_a WebPipes::JavascriptExecutor::Error }
+    it { expect(error.location.line).to be_nil}
+    it { expect(error.location.column).to be_nil}
     it { expect(error.cause).to be_a CustomError }
   end
 
