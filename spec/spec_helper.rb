@@ -83,6 +83,8 @@ RSpec.configure do |config|
   # as the one that triggered the failure.
   Kernel.srand config.seed
 =end
+
+  config.order = :random
 end
 
 Capybara.register_driver :mechanize do |app|
