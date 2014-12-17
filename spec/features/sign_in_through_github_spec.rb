@@ -1,4 +1,5 @@
 require 'rails_helper'
+require 'support/github_credentials'
 
 feature "Sign In Through Github" do
 
@@ -6,8 +7,8 @@ feature "Sign In Through Github" do
     visit "/"
     click_on "Sign in with GitHub"
     within '#login' do
-      fill_in "Username or Email", with: ENV['GITHUB_USERNAME']
-      fill_in "Password", with: ENV['GITHUB_PASSWORD']
+      fill_in "Username or Email", with: GitHubCredentials.username
+      fill_in "Password", with: GitHubCredentials.password
       click_on "Sign in"
     end
     if page.has_content? "Review permissions"
