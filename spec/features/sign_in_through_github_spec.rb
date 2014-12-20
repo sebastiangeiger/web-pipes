@@ -10,9 +10,7 @@ feature 'Sign In Through Github' do
       fill_in 'Password', with: GitHubCredentials.password
       click_on 'Sign in'
     end
-    if page.has_content? 'Review permissions'
-      click_on 'Authorize application'
-    end
+    click_on 'Authorize application' if page.has_content? 'Review permissions'
     expect(page).to_not have_content 'Sign in with GitHub'
     expect(page).to have_content GitHubCredentials.username
   end

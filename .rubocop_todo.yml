@@ -13,8 +13,3 @@ Metrics/LineLength:
 # Offense count: 6
 Style/Documentation:
   Enabled: false
-
-# Offense count: 1
-# Configuration parameters: MaxLineLength.
-Style/IfUnlessModifier:
-  Enabled: false
