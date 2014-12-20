@@ -1,0 +1,15 @@
+language: ruby
+sudo: false
+rvm:
+- 2.1.2
+before_script:
+- "bundle exec rake db:create db:schema:load"
+script:
+- "bundle exec rubocop"
+- "bundle exec rspec"
+env:
+  global:
+  - secure: FKw/2OOG0iU6BcKfSWXkPMBKGa3GDTMb7Wxd1UPcC4Wzt0SFmKrElsF8WJsSAnrcelXXBZd3iW0TmD+7IgfYkNNJzTO5THzNOprtrMOSggfsbwfM5mhd4NgzWUVrs3unlGWsdVUTVKDyq8veMZ4cOi1K2VIOjB6gYYsjiPS4sXE=
+  - secure: FJQQj7RFGhR34wJN3esFHjbyvWiL+XwirMieyPrjX+6vh1qkyRTdBBQaqCzZyILzjyWa+hXeW4vadaLMytmkd7PL3LIJIiG7TbzE2H55LsyKtP02Ezojhl2lRsYdB8Fru6dWsOhJzey+WGcl4bGPvTVz1mQK0ddeF4B59luCnTE=
+  - secure: Oj9qvzgMpLE50s7GxCWgfmsEAexLqXXPXOt89kgUpSdCrqmfFuZiypGi//6qTyvGc4pptesXbAD86Ho/l9N2xQfGoC5Ew1U0PxeWMd5b5KGYqbQA/Fn3A2UVbsg6xbkDhfaOQTQ4x4+TFQihfouvdaWp3Y2ac7pHP+NnwHM5e2M=
+  - secure: AJQwcHuBPHRWB4/eC+vNIhp27fhVYkif/MAWNlPzDZorm7Pk0h3bOOqILgP6TvULJ4QYz4rvoMU1kD289j0eVCyZriVY7RcUJ/dxlytLC/M7cYwr9IH7aemGGQBVOGX54fBskrhuApGCpB3aLSfvtvrhMZHXMdIM8UGpmT/hWXo=
