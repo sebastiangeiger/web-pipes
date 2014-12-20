@@ -10,6 +10,7 @@ html
   body
     - if current_user
       = current_user.username
+      = link_to "Sign out", sign_out_path, method: :delete
     - else
       = link_to "Sign in with GitHub", '/auth/github'
     = yield
