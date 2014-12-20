@@ -2,5 +2,6 @@ Rails.application.routes.draw do
   root 'home#index'
 
   get '/auth/github/callback', to: 'sessions#create'
-  get '/sign_out', to: 'sessions#destroy'
+  delete '/sign_out', to: 'sessions#destroy'
+  get '/sign_out', to: 'sessions#destroy' if Rails.env.test?
 end
