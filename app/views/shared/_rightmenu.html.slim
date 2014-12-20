@@ -1,0 +1,13 @@
+.menu.right
+  - if current_user
+    .item.ui.dropdown.simple
+        .text = current_user.username
+        i.dropdown.icon
+        .menu
+          .item
+            = link_to "Sign out", sign_out_path, method: :delete
+  - else
+    .item
+      a.ui.button href='/auth/github'
+        i.github.icon
+        | Sign in with GitHub

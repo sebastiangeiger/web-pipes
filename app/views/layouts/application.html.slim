@@ -8,9 +8,5 @@ html
     = csrf_meta_tags
 
   body
-    - if current_user
-      = current_user.username
-      = link_to "Sign out", sign_out_path, method: :delete, class: "ui button"
-    - else
-      = link_to "Sign in with GitHub", '/auth/github', class: "ui button"
+    = render 'shared/menu'
     = yield
