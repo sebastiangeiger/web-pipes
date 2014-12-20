@@ -14,6 +14,8 @@ feature "Sign In Through Github" do
     if page.has_content? "Review permissions"
       click_on "Authorize application"
     end
+    expect(page).to_not have_content "Sign in with GitHub"
+    expect(page).to have_content GitHubCredentials.username
   end
 
 end

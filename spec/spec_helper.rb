@@ -98,6 +98,8 @@ RSpec.configure do |c|
       Capybara.current_driver = :mechanize
       example.run
       Capybara.current_driver = old_driver
+    else
+      example.run
     end
   end
 end
