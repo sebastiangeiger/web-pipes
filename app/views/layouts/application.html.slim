@@ -1,0 +1,16 @@
+doctype html
+html
+  head
+    title ClaristreamManagementSystem
+    meta name="viewport" content="width=device-width, initial-scale=1.0"
+    = stylesheet_link_tag    "application", media: 'all', 'data-turbolinks-track' => true
+    = javascript_include_tag "application", 'data-turbolinks-track' => true
+    = csrf_meta_tags
+
+  body
+    - if current_user
+      = current_user.username
+      = link_to "Sign out", sign_out_path, method: :delete
+    - else
+      = link_to "Sign in with GitHub", '/auth/github'
+    = yield
