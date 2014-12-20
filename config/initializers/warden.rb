@@ -1,11 +1,11 @@
 Rails.application.config.middleware.use Warden::Manager do |manager|
   manager.default_strategies :openid
-  manager.failure_app = lambda { |env| SessionsController.action(:failure).call(env) }
+  manager.failure_app = lambda do |env|
+    SessionsController.action(:failure).call(env)
+  end
 end
 
-Warden::Manager.serialize_into_session do |user|
-  user.id
-end
+Warden::Manager.serialize_into_session(&:id)
 
 Warden::Manager.serialize_from_session do |id|
   User.find(id)
@@ -14,22 +14,28 @@ end
 Warden::Strategies.add(:openid) do
   def authenticate!
     if auth_hash_valid?
-      user = User.find_by(provider_uid: provider_uid)
-      unless user.present?
-        user = User.create(full_name: full_name,
-                           provider_uid: provider_uid,
-                           username: username)
-      end
-      success! user
+      success! find_or_create_user
     else
-      fail "Auth hash was not valid"
+      fail 'Auth hash was not valid'
     end
   end
 
   private
 
+  def find_or_create_user
+    user = User.find_by(provider_uid: provider_uid)
+    unless user.present?
+      user = User.create(full_name: full_name,
+                         provider_uid: provider_uid,
+                         username: username)
+    end
+    user
+  end
+
   def auth_hash_valid?
-    auth_hash.present? and auth_hash.uid.present? and auth_hash.provider == "github"
+    auth_hash.present? &&
+      auth_hash.uid.present? &&
+      auth_hash.provider == 'github'
   end
 
   def provider_uid

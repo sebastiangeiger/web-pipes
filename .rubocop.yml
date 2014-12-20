@@ -3,5 +3,4 @@ AllCops:
   RunRailsCops: true
   Exclude:
     - 'db/**/*'
-    - 'config/**/*'
     - 'bin/**/*'
