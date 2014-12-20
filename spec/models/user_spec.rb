@@ -1,13 +1,15 @@
 require 'rails_helper'
 
-RSpec.describe User, :type => :model do
+RSpec.describe User, type: :model do
   describe 'validations' do
-    let(:full_name) { "Jon Doe" }
-    let(:username) { "jondoe" }
-    let(:provider_uid) { "github_0815" }
-    subject(:user) { User.new(full_name: full_name,
-                              username: username,
-                              provider_uid: provider_uid) }
+    let(:full_name) { 'Jon Doe' }
+    let(:username) { 'jondoe' }
+    let(:provider_uid) { 'github_0815' }
+    subject(:user) do
+      User.new(full_name: full_name,
+               username: username,
+               provider_uid: provider_uid)
+    end
 
     it { is_expected.to be_valid }
 
@@ -22,9 +24,11 @@ RSpec.describe User, :type => :model do
     end
 
     context 'when another user with the same provider_uid exists' do
-      before { User.create!(provider_uid: provider_uid,
-                            full_name: "Some User",
-                            username: 'someuser') }
+      before do
+        User.create!(provider_uid: provider_uid,
+                     full_name: 'Some User',
+                     username: 'someuser')
+      end
       it { is_expected.to_not be_valid }
     end
 
