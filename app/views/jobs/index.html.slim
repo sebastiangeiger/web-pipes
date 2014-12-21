@@ -8,3 +8,11 @@
     .seven.wide.column.float.right
       = link_to "New Job", new_job_path, class: "ui button right blue"
     .one.wide.column
+  .row
+    .one.wide.column
+    .fourteen.wide.column
+      .ui.divided.list
+        - @jobs.each do |job|
+          .item = job.name
+    .one.wide.column
+
