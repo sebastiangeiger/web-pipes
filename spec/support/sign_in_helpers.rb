@@ -14,15 +14,21 @@ module SignInHelpers
 
   def fake_sign_in!
     OmniAuth.config.test_mode = true
-    OmniAuth.config.mock_auth[:github] = OmniAuth::AuthHash.new({
-      provider: 'github',
-      uid: "0815",
-      info: {
-        full_name: "GitHub User",
-        nickname: "github_username"
-      }
-    })
+    OmniAuth.config.mock_auth[:github] = OmniAuth::AuthHash.new(sign_in_hash)
     visit '/auth/github'
     OmniAuth.config.test_mode = false
+  end
+
+  private
+
+  def sign_in_hash
+    {
+      provider: 'github',
+      uid: '0815',
+      info: {
+        full_name: 'GitHub User',
+        nickname: 'github_username'
+      }
+    }
   end
 end

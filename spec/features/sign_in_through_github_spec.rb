@@ -29,6 +29,6 @@ feature 'Sign In Through Github' do
     fake_sign_in!
     visit '/'
     expect(page).to_not have_content 'Sign in with GitHub'
-    expect(page).to have_content "github_username"
+    expect(page).to have_content 'github_username'
   end
 end
