@@ -11,4 +11,18 @@ module SignInHelpers
     end
     click_on 'Authorize application' if page.has_content? 'Review permissions'
   end
+
+  def fake_sign_in!
+    OmniAuth.config.test_mode = true
+    OmniAuth.config.mock_auth[:github] = OmniAuth::AuthHash.new({
+      provider: 'github',
+      uid: "0815",
+      info: {
+        full_name: "GitHub User",
+        nickname: "github_username"
+      }
+    })
+    visit '/auth/github'
+    OmniAuth.config.test_mode = false
+  end
 end
