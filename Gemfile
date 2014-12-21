@@ -22,6 +22,7 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 
 gem 'slim', '~> 3.0.0'
 gem 'slim-rails'
+gem 'semantic-ui-sass', github: 'doabit/semantic-ui-sass', branch: 'v1.0beta'
 
 gem 'omniauth'
 gem 'omniauth-github'

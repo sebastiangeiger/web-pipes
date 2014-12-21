@@ -1,3 +1,11 @@
+GIT
+  remote: git://github.com/doabit/semantic-ui-sass.git
+  revision: 06a56b587efd615d256db5a499c4cee466d33871
+  branch: v1.0beta
+  specs:
+    semantic-ui-sass (1.2.0.0)
+      sass (~> 3.2)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -262,6 +270,7 @@ DEPENDENCIES
   rubocop
   sass-rails (~> 4.0)
   sdoc (~> 0.4.0)
+  semantic-ui-sass!
   slim (~> 3.0.0)
   slim-rails
   sqlite3
