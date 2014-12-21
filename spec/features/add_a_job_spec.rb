@@ -9,8 +9,6 @@ feature 'Jobs' do
     visit '/'
     click_on 'New Job'
     fill_in :job_name, with: 'Job #1'
-    click_on 'Create Job'
-    visit '/'
-    expect(page).to have_content 'Job #1'
+    click_on 'Next'
   end
 end
