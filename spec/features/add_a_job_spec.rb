@@ -7,7 +7,7 @@ feature 'Jobs' do
   scenario 'add a job' do
     fake_sign_in!
     visit '/'
-    click_on "New Job"
+    click_on 'New Job'
+    fill_in :job_name, with: 'Job #1'
   end
 end
-

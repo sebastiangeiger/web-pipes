@@ -1,0 +1,11 @@
+.ui.grid
+  .row
+    .one.wide.column
+    .fourteen.wide.column
+      h1 New Job
+      .ui.form
+        = form_for @job do |f|
+          .field
+            = f.label :name
+            = f.text_field :name, placeholder: "My awesome job"
+    .one.wide.column
