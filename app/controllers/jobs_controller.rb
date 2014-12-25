@@ -4,8 +4,12 @@ class JobsController < ApplicationController
   end
 
   def create
-    @job = Job.create(job_params)
-    redirect_to root_path
+    @job = Job.new(job_params)
+    if @job.save
+      redirect_to root_path
+    else
+      render :new
+    end
   end
 
   def index
