@@ -45,4 +45,5 @@ end
 group :test do
   gem 'capybara'
   gem 'capybara-mechanize'
+  gem 'webmock'
 end

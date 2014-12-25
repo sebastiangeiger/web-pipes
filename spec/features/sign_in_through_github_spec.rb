@@ -5,7 +5,7 @@ require 'support/sign_in_helpers'
 feature 'Sign In Through Github' do
   include SignInHelpers
 
-  scenario 'Signin in when I supply the right credentials', :external do
+  scenario 'Signing in when I supply the right credentials', :external do
     visit '/'
     click_on 'Sign in with GitHub'
     within '#login' do
@@ -23,5 +23,12 @@ feature 'Sign In Through Github' do
     click_on 'Sign out'
     expect(page).to have_content 'Sign in with GitHub'
     expect(page).to_not have_content GitHubCredentials.username
+  end
+
+  scenario 'Fake signing in bypassing Github' do
+    fake_sign_in!
+    visit '/'
+    expect(page).to_not have_content 'Sign in with GitHub'
+    expect(page).to have_content 'github_username'
   end
 end

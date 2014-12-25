@@ -1,0 +1,14 @@
+.ui.grid
+  .row
+    .one.wide.column
+    .fourteen.wide.column
+      h1 New Job
+      .ui.form
+        = form_for @job do |f|
+          = render_errors @job
+          .field
+            = f.label :name
+            = f.text_field :name, required: true, placeholder: "My awesome job"
+          .field
+            = f.submit 'Next', class: "ui submit button blue pull-right"
+    .one.wide.column
