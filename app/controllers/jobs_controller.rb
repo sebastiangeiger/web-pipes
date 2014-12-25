@@ -6,7 +6,7 @@ class JobsController < ApplicationController
   def create
     @job = Job.new(job_params)
     if @job.save
-      redirect_to root_path
+      redirect_to @job
     else
       render :new
     end
@@ -14,6 +14,10 @@ class JobsController < ApplicationController
 
   def index
     @jobs = Job.all
+  end
+
+  def show
+    @job = Job.find(params[:id])
   end
 
   private
