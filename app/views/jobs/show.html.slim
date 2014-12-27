@@ -6,9 +6,12 @@
         i.truck.icon
         = @job.name
 
-      = form_for @job do |f|
-        = f.label :code
-        = f.text_area :code
+      .ui.form
+        = form_for @job do |f|
+          .field
+            = f.label :code
+            = f.text_area :code
+
     .one.wide.column
 
 
