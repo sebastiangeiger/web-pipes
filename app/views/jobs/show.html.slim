@@ -6,12 +6,10 @@
         i.truck.icon
         = @job.name
 
-      .ui.form
+      .ui.form.segment
         = form_for @job do |f|
           .field
             = f.label :code
             = f.text_area :code
 
     .one.wide.column
-
-
