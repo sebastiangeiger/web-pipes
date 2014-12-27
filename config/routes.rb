@@ -7,5 +7,5 @@ Rails.application.routes.draw do
 
   get '/about', to: 'static_pages#about'
 
-  resources :jobs, only: [:index, :new, :create, :show]
+  resources :jobs, only: [:index, :new, :create, :show, :update]
 end

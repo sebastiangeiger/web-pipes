@@ -11,6 +11,10 @@ class Job < ActiveRecord::Base
     end
   end
 
+  def code=(new_code)
+    CodeVersion.create(job: self, code: new_code)
+  end
+
   def latest_code_version
     code_versions.last
   end

@@ -4,7 +4,7 @@ class JobsController < ApplicationController
   end
 
   def create
-    @job = Job.new(job_params)
+    @job = Job.new(job_create_params)
     if @job.save
       redirect_to @job
     else
@@ -20,9 +20,19 @@ class JobsController < ApplicationController
     @job = Job.find(params[:id])
   end
 
+  def update
+    @job = Job.find(params[:id])
+    @job.update(job_update_params)
+    redirect_to action: :show
+  end
+
   private
 
-  def job_params
+  def job_create_params
     params.require(:job).permit(:name)
+  end
+
+  def job_update_params
+    params.require(:job).permit(:code)
   end
 end
