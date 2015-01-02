@@ -13,6 +13,6 @@
     .fourteen.wide.column
       .ui.divided.list
         - @jobs.each do |job|
-          .item = job.name
+          .item = link_to job.name, job
     .one.wide.column
 

@@ -3,7 +3,7 @@
     .one.wide.column
     .fourteen.wide.column
       h1 New Job
-      .ui.form
+      .ui.form.error.segment
         = form_for @job do |f|
           = render_errors @job
           .field

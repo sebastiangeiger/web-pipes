@@ -10,6 +10,8 @@ feature 'Jobs' do
     click_on 'New Job'
     fill_in :job_name, with: 'Job #1'
     click_on 'Next'
+    expect(current_path).to eql '/jobs/1'
+    expect(find('h1')).to have_content 'Job #1'
   end
 
   scenario 'add a job without a name' do
