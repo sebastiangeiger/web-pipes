@@ -103,7 +103,9 @@ RSpec.configure do |c|
     if example.metadata[:external]
       old_driver = Capybara.current_driver
       Capybara.current_driver = :mechanize
+      WebMock.disable!
       example.run
+      WebMock.enable!
       Capybara.current_driver = old_driver
     else
       WebMock.enable!
