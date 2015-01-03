@@ -47,3 +47,6 @@ group :test do
   gem 'capybara-mechanize'
   gem 'webmock'
 end
+
+gem "faraday"
+gem "therubyracer"
