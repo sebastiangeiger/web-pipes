@@ -48,5 +48,5 @@ group :test do
   gem 'webmock'
 end
 
-gem "faraday"
-gem "therubyracer"
+gem 'faraday'
+gem 'therubyracer'

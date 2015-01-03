@@ -51,15 +51,13 @@ module WebPipes
         end
 
         private
-        def eval_error(&block)
-          eval_error = @error.backtrace.detect {|backtrace| backtrace =~ EVAL_ERROR_REGEX }
-          if eval_error
-            block.call(eval_error.match(EVAL_ERROR_REGEX))
-          else
-            nil
-          end
-        end
 
+        def eval_error(&block)
+          eval_error = @error.backtrace.detect do |backtrace|
+            backtrace =~ EVAL_ERROR_REGEX
+          end
+          block.call(eval_error.match(EVAL_ERROR_REGEX)) if eval_error
+        end
       end
     end
 
@@ -82,7 +80,7 @@ module WebPipes
       end
 
       def executed?
-        !!@executed
+        !@executed.nil?
       end
 
       def convert(v8_object)
@@ -94,7 +92,7 @@ module WebPipes
       end
 
       def successful?
-        executed? and @errors.empty?
+        executed? && @errors.empty?
       end
     end
   end
