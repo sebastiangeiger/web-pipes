@@ -3,3 +3,11 @@
 .ui.button.pull-right {
   float: right;
 }
+
+.ui.form.segment.errored {
+  background-color: red;
+}
+
+.ui.form.segment.success {
+  background-color: green;
+}

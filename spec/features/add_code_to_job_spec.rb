@@ -12,10 +12,17 @@ feature 'Code' do
     click_on 'Next'
   end
 
-  scenario 'add code to a job' do
+  scenario 'add correct code to a job' do
     fill_in :job_code, with: 'console.log("1+2=" + (1+2));'
     click_on 'Save & Test'
     expect(page).to have_content 'console.log("1+2=" + (1+2));'
     expect(page).to have_content '1+2=3'
+  end
+
+  scenario 'add failing code to a job' do
+    fill_in :job_code, with: 'console.error("1+2=" + (1+2));'
+    click_on 'Save & Test'
+    expect(page).to have_content 'console.error("1+2=" + (1+2));'
+    expect(page).to have_content "Object [object Object] has no method 'error'"
   end
 end

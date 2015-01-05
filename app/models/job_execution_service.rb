@@ -7,8 +7,12 @@ class JobExecutionService
 
   def execute
     executor.register(:console, console)
-    executor.execute(@code)
-    Result.new(output: console.to_s)
+    protocol = executor.execute(@code)
+    if protocol.successful?
+      Result.new(output: console.to_a, status: :success)
+    else
+      Result.new(output: protocol.errors.map(&:message), status: :errored)
+    end
   end
 
   private
@@ -38,8 +42,8 @@ class JobExecutionService
       @log << message
     end
 
-    def to_s
-      @log.join("\n")
+    def to_a
+      @log
     end
   end
 end
