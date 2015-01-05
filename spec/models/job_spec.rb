@@ -34,7 +34,7 @@ RSpec.describe Job, type: :model do
   end
 
   describe '#update' do
-    subject(:update) { job.update({code: code}) }
+    subject(:update) { job.update(code: code) }
 
     context 'when the job does not have a code version yet' do
       let(:code) { 'function(){};' }
