@@ -32,4 +32,57 @@ RSpec.describe Job, type: :model do
       it { is_expected.to eql 'code #2' }
     end
   end
+
+  describe '#update' do
+    subject(:update) { job.update(code: code) }
+
+    context 'when the job does not have a code version yet' do
+      let(:code) { 'function(){};' }
+      it 'creates a job version' do
+        expect { update }.to change(CodeVersion, :count).from(0).to(1)
+      end
+      it 'is accessible through #code' do
+        expect { update }.to change(job, :code).from('').to(code)
+      end
+    end
+
+    context 'when the job already has a code version' do
+      before { CodeVersion.create(job: job, code: 'function(){};') }
+
+      context 'when trying to save new code' do
+        let(:code) { 'function(args){};' }
+        it 'creates a code version' do
+          expect { update }.to change(CodeVersion, :count).from(1).to(2)
+        end
+      end
+
+      context 'when trying to save the same code' do
+        let(:code) { 'function(){};' }
+        it 'does not create a code version' do
+          expect { update }.to_not change(CodeVersion, :count).from(1)
+        end
+      end
+    end
+
+    context 'when the job already has two code versions' do
+      before do
+        CodeVersion.create(job: job, code: 'function(){};')
+        CodeVersion.create(job: job, code: 'function(args){};')
+      end
+
+      context 'when trying to save the same code' do
+        let(:code) { 'function(args){};' }
+        it 'does not create a code version' do
+          expect { update }.to_not change(CodeVersion, :count).from(2)
+        end
+      end
+
+      context 'when trying to save a previous version' do
+        let(:code) { 'function(){};' }
+        it 'creates a code version' do
+          expect { update }.to change(CodeVersion, :count).from(2).to(3)
+        end
+      end
+    end
+  end
 end

@@ -23,7 +23,14 @@ class JobsController < ApplicationController
   def update
     @job = Job.find(params[:id])
     @job.update(job_update_params)
-    redirect_to action: :show
+    redirect_to action: :test
+  end
+
+  def test
+    @job = Job.find(params[:id])
+    result = JobExecutionService.new(@job).execute
+    @output = result.output
+    @status = result.status
   end
 
   private

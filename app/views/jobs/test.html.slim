@@ -9,4 +9,8 @@
       .ui.form.segment
         = render 'edit_form'
 
+      .ui.form.segment class=@status
+        - @output.each do |output|
+          p = output
     .one.wide.column
+

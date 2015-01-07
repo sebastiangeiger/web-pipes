@@ -12,7 +12,13 @@ class Job < ActiveRecord::Base
   end
 
   def code=(new_code)
-    CodeVersion.create(job: self, code: new_code)
+    add_code_version(new_code) if code != new_code
+  end
+
+  private
+
+  def add_code_version(new_code)
+    code_versions << CodeVersion.new(job: self, code: new_code)
   end
 
   def latest_code_version

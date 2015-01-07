@@ -1,0 +1,5 @@
+= form_for @job do |f|
+  .field
+    = f.label :code
+    = f.text_area :code
+  = f.submit 'Save & Test', class: 'ui submit button blue'
