@@ -18,6 +18,7 @@ class JobsController < ApplicationController
 
   def show
     @job = Job.find(params[:id])
+    @results = @job.execution_results.limit(10)
   end
 
   def update
@@ -29,7 +30,7 @@ class JobsController < ApplicationController
   def test
     @job = Job.find(params[:id])
     result = JobExecutionService.new(@job).execute
-    @output = result.output
+    @messages = result.messages
     @status = result.status
   end
 

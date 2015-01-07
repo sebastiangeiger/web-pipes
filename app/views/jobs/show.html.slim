@@ -9,4 +9,8 @@
       .ui.form.segment
         = render 'edit_form'
 
+      ul#execution-results
+        = @results.each do |result|
+          li.result = result
+
     .one.wide.column

@@ -2,6 +2,7 @@ require_relative '../../lib/web_pipes'
 
 class JobExecutionService
   def initialize(job)
+    @job = job
     @code = job.code
   end
 
@@ -9,9 +10,10 @@ class JobExecutionService
     executor.register(:console, console)
     protocol = executor.execute(@code)
     if protocol.successful?
-      Result.new(output: console.to_a, status: :success)
+      ExecutionResult.new(job: @job, messages: console.to_a, status: :success)
     else
-      Result.new(output: protocol.errors.map(&:message), status: :errored)
+      messages = protocol.errors.map(&:message)
+      ExecutionResult.new(job: @job, messages: messages, status: :errored)
     end
   end
 
@@ -23,14 +25,6 @@ class JobExecutionService
 
   def console
     @console ||= Console.new
-  end
-
-  class Result
-    attr_reader :output, :status
-    def initialize(output: '', status: '')
-      @output = output
-      @status = status
-    end
   end
 
   class Console

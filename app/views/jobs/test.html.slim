@@ -10,7 +10,7 @@
         = render 'edit_form'
 
       .ui.form.segment class=@status
-        - @output.each do |output|
-          p = output
+        - @messages.each do |message|
+          p = message
     .one.wide.column
 
