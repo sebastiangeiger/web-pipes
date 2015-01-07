@@ -63,5 +63,26 @@ RSpec.describe Job, type: :model do
         end
       end
     end
+
+    context 'when the job already has two code versions' do
+      before do
+        CodeVersion.create(job: job, code: 'function(){};')
+        CodeVersion.create(job: job, code: 'function(args){};')
+      end
+
+      context 'when trying to save the same code' do
+        let(:code) { 'function(args){};' }
+        it 'does not create a code version' do
+          expect { update }.to_not change(CodeVersion, :count).from(2)
+        end
+      end
+
+      context 'when trying to save a previous version' do
+        let(:code) { 'function(){};' }
+        it 'creates a code version' do
+          expect { update }.to change(CodeVersion, :count).from(2).to(3)
+        end
+      end
+    end
   end
 end

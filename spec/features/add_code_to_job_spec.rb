@@ -30,6 +30,6 @@ feature 'Code' do
     fill_in :job_code, with: 'function(]{};'
     click_on 'Save & Test'
     expect(page).to have_content 'function(]{};'
-    expect(page).to have_content "Unexpected token ( at <eval>:1:10"
+    expect(page).to have_content 'Unexpected token ( at <eval>:1:10'
   end
 end
