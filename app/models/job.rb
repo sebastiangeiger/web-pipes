@@ -2,6 +2,7 @@ class Job < ActiveRecord::Base
   validates :name, presence: true, uniqueness: true
 
   has_many :code_versions, -> { order(updated_at: :asc) }
+  has_many :execution_results
 
   def code
     if latest_code_version

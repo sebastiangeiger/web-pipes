@@ -11,25 +11,45 @@ RSpec.describe Job, type: :model do
 
     context 'when assiging a job' do
       before { job.code_versions << code_version }
+
       it { is_expected.to match_array [code_version] }
     end
   end
 
   describe '#code' do
     subject { job.code }
+
     context 'without a code_version' do
       it { is_expected.to eql '' }
     end
+
     context 'after assigning a code_version' do
       before { CodeVersion.create(job: job, code: 'code #1') }
+
       it { is_expected.to eql 'code #1' }
     end
+
     context 'after assigning two code_versions' do
       before do
         CodeVersion.create(job: job, code: 'code #1')
         CodeVersion.create(job: job, code: 'code #2')
       end
+
       it { is_expected.to eql 'code #2' }
+    end
+  end
+
+  describe '#execution_results' do
+    subject { job.execution_results }
+
+    it { is_expected.to be_empty }
+
+    context 'with one ExecutionResult' do
+      let(:execution_result) { ExecutionResult.new }
+
+      before { job.execution_results <<  execution_result }
+
+      it { is_expected.to match_array [execution_result] }
     end
   end
 
